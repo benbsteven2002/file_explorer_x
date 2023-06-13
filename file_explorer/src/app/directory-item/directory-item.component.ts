@@ -1,4 +1,7 @@
+// directory-item.ts
+
 import { Component, Input } from '@angular/core';
+import { DirectoryService } from '../directory.service';
 
 @Component({
   selector: 'app-directory-item',
@@ -10,6 +13,7 @@ export class DirectoryItemComponent {
   isSelected = false;
 
   selected: boolean = false;
+  constructor(private directoryService: DirectoryService) {}
 
   toggleSelection() {
     this.selected = !this.selected;
@@ -32,7 +36,7 @@ export class DirectoryItemComponent {
 
   handleButtonPress(parameter: string): void {
     console.log('Button pressed with parameter:', parameter);
-
+    this.directoryService.directorySelected.emit(parameter);
   }
 
 

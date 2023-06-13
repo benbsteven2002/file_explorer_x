@@ -1,6 +1,8 @@
+// directory.component.ts
+
 import { Component } from '@angular/core';
 import { ApiService } from '../api.service';
-
+import { DirectoryService } from '../directory.service';
 
 @Component({
   selector: 'app-directory',
@@ -8,7 +10,7 @@ import { ApiService } from '../api.service';
   styleUrls: ['./directory.component.css']
 })
 export class DirectoryComponent {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private directoryService: DirectoryService) {}
 
   directoryListings: any[] = [];
 
@@ -28,6 +30,12 @@ export class DirectoryComponent {
   ngOnInit() {
     const initialPath = 'http://localhost:3000/api/data/current';
     this.fetchDirectoryListings(initialPath);
+
+    // Subscribe to directory service
+    this.directoryService.directorySelected.subscribe((selectedDirectory: string) => {
+      console.log('Selected directory:', selectedDirectory);
+      this.fetchDirectoryListings(selectedDirectory);
+    });
   }
 
   goBack(): void {
