@@ -31,7 +31,6 @@ export class DirectoryComponent {
   ngOnInit() {
     this.fetchDirectoryListings(this.path);
 
-    // Subscribe to directory service
     this.directoryService.directorySelected.subscribe((selectedDirectory: string) => {
       console.log('Selected directory:', selectedDirectory);
       this.fetchDirectoryListings(selectedDirectory);

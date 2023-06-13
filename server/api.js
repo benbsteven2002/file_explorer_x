@@ -20,6 +20,7 @@ app.get('/api/data/*', (req, res) => {
     console.log(targetDirectory);
   }
   const directoryListing = getDirectoryListing(targetDirectory);
+  console.log(directoryListing);
   res.json(directoryListing);
 });
 
@@ -50,9 +51,9 @@ const getDirectoryListing = (directoryPath) => {
         const itemStats = fs.statSync(itemInfo.path);
 
         itemInfo.size = itemStats.size;
-        itemInfo.type = path.extname(itemInfo.name);
-        itemInfo.created = itemStats.birthtime;
-        itemInfo.permissions = itemStats.mode.toString(8).slice(-3);
+        itemInfo.type = item.isDirectory() ? 'directory' : path.extname(itemInfo.name);
+        itemInfo.created = itemStats.birthtime.toISOString().slice(0, 10);
+        itemInfo.permissions = convertPermissionCode(parseInt(itemStats.mode.toString(8).slice(-3), 8));
 
         directoryListing.push(itemInfo);
       } catch (error) {
@@ -66,3 +67,15 @@ const getDirectoryListing = (directoryPath) => {
     return [];
   }
 };
+
+function convertPermissionCode(code) {
+  const binary = code.toString(2).padStart(9, '0');
+
+  const permissionSymbols = ['---', '--x', '-w-', '-wx', 'r--', 'r-x', 'rw-', 'rwx'];
+
+  const userPermissions = permissionSymbols[parseInt(binary.slice(0, 3), 2)];
+  const groupPermissions = permissionSymbols[parseInt(binary.slice(3, 6), 2)];
+  const otherPermissions = permissionSymbols[parseInt(binary.slice(6), 2)];
+
+  return userPermissions + groupPermissions + otherPermissions;
+}

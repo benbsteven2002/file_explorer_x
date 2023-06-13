@@ -29,14 +29,31 @@ export class DirectoryItemComponent {
         return '../../assets/js.svg';
       case '.json':
         return '../../assets/json.svg';
-      default:
+      case 'directory':
         return '../../assets/folder-open.svg';
+      case '.css':
+        return '../../assets/css.svg';
+      case '.git':
+      case '.gitignore':
+        return '../../assets/git.svg';
+      case '.html':
+        return '../../assets/html5.svg';
+      case '.png':
+      case '.HEIC':
+      case '.svg':
+        return '../../assets/image.svg';
+      case '.mov':
+        return '../../assets/video.svg';
+      default:
+        return '../../assets/file.svg';
     }
   }
 
-  handleButtonPress(parameter: string): void {
-    console.log('Button pressed with parameter:', parameter);
-    this.directoryService.directorySelected.emit(parameter);
+  handleButtonPress(parameter: string, isDirectory: boolean): void {
+    if (isDirectory == true) {
+      console.log('Button pressed with parameter:', parameter);
+      this.directoryService.directorySelected.emit(parameter);
+    }
   }
 
 

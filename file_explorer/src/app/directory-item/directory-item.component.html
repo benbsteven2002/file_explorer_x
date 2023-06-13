@@ -4,16 +4,17 @@
       <mat-panel-title>
         {{ item.name }}
       </mat-panel-title>
-      <mat-panel-description>
+      <mat-panel-description class="summary">
         <span>{{ item.path }}</span>
       </mat-panel-description>
-      <button mat-icon-button color="primary" (click)="handleButtonPress(item.path)">
+      <img [src]="getIconPath(item.type)" class="img">
+      <button mat-icon-button color="primary" (click)="handleButtonPress(item.path, item.isDirectory)">
         <mat-icon>arrow_forward</mat-icon>
       </button>
     </mat-expansion-panel-header>
-    <li>Item size: {{ item.size }}</li>
+    <li>Item size: {{ item.size }} bytes</li>
     <li>Item type: {{ item.type }}</li>
-    <li>Item created: {{ item.created }}</li>
+    <li>Date created: {{ item.created }}</li>
     <li>Permissions: {{ item.permissions }}</li>
     <li>Is directory: {{ item.isDirectory }}</li>
   </mat-expansion-panel>
