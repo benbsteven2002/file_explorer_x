@@ -31,11 +31,11 @@ export class DirectoryComponent {
   }
 
   goBack(): void {
-    // Add the necessary logic to navigate back to the previous page or component
+    // Add logic to navigate back to the previous page
   }
 
   toggleSelection(): void {
-    // Add any additional logic you need for the selection mode
+    // Add logic for the selection mode
   }
 
 }

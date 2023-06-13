@@ -30,4 +30,10 @@ export class DirectoryItemComponent {
     }
   }
 
+  handleButtonPress(parameter: string): void {
+    console.log('Button pressed with parameter:', parameter);
+
+  }
+
+
 }

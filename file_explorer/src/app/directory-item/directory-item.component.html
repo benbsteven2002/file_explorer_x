@@ -7,6 +7,9 @@
       <mat-panel-description>
         <span>{{ item.path }}</span>
       </mat-panel-description>
+      <button mat-icon-button color="primary" (click)="handleButtonPress(item.path)">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
     </mat-expansion-panel-header>
     <li>Item size: {{ item.size }}</li>
     <li>Item type: {{ item.type }}</li>
@@ -15,3 +18,4 @@
     <li>Is directory: {{ item.isDirectory }}</li>
   </mat-expansion-panel>
 </div>
+
