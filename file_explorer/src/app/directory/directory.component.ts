@@ -13,6 +13,7 @@ export class DirectoryComponent {
   constructor(private apiService: ApiService, private directoryService: DirectoryService) {}
 
   directoryListings: any[] = [];
+  path: string = "/root";
 
 
   fetchDirectoryListings(path: string) {
@@ -28,22 +29,36 @@ export class DirectoryComponent {
 
 
   ngOnInit() {
-    const initialPath = 'http://localhost:3000/api/data/current';
-    this.fetchDirectoryListings(initialPath);
+    this.fetchDirectoryListings(this.path);
 
     // Subscribe to directory service
     this.directoryService.directorySelected.subscribe((selectedDirectory: string) => {
       console.log('Selected directory:', selectedDirectory);
       this.fetchDirectoryListings(selectedDirectory);
+      this.path = selectedDirectory;
     });
   }
 
   goBack(): void {
-    // Add logic to navigate back to the previous page
+
+    const direc = this.getParentDirectory(this.path)
+    this.path = direc;
+
+    if (this.path === '') {
+      this.path = '/root';
+      this.fetchDirectoryListings(this.path);
+    } else {
+      this.fetchDirectoryListings(direc);
+    }
   }
 
-  toggleSelection(): void {
-    // Add logic for the selection mode
+  getParentDirectory(directory: string): string {
+    const lastSlashIndex = directory.lastIndexOf('/');
+    if (lastSlashIndex !== -1) {
+      return directory.substring(0, lastSlashIndex);
+    }
+    return directory;
   }
+
 
 }

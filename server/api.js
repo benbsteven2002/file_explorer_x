@@ -6,17 +6,20 @@ const path = require('path');
 
 app.use(cors());
 
-app.get('/api/data/:directoryPath', (req, res) => {
-  console.log("here");
+app.get('/api/data/*', (req, res) => {
+  const directoryPath = req.params[0];
   let targetDirectory;
-
-  if (req.params.directoryPath === 'current') {
-    targetDirectory = process.cwd();
+  
+  console.log(req.params);
+  console.log(directoryPath);
+  
+  if (directoryPath === 'root') {
+    targetDirectory = '/';
   } else {
-    targetDirectory = path.join(process.cwd(), req.params.directoryPath);
+    targetDirectory = path.join('/', directoryPath);
+    console.log(targetDirectory);
   }
   const directoryListing = getDirectoryListing(targetDirectory);
-  console.log(directoryListing);
   res.json(directoryListing);
 });
 
@@ -43,19 +46,23 @@ const getDirectoryListing = (directoryPath) => {
         isDirectory: item.isDirectory(),
       };
 
-      const itemStats = fs.statSync(itemInfo.path);
+      try {
+        const itemStats = fs.statSync(itemInfo.path);
 
-      itemInfo.size = itemStats.size;
-      itemInfo.type = path.extname(itemInfo.name);
-      itemInfo.created = itemStats.birthtime;
-      itemInfo.permissions = itemStats.mode.toString(8).slice(-3);
+        itemInfo.size = itemStats.size;
+        itemInfo.type = path.extname(itemInfo.name);
+        itemInfo.created = itemStats.birthtime;
+        itemInfo.permissions = itemStats.mode.toString(8).slice(-3);
 
-      directoryListing.push(itemInfo);
+        directoryListing.push(itemInfo);
+      } catch (error) {
+        console.error(`Error retrieving item info for ${itemInfo.path}:`, error);
+      }
     });
 
     return directoryListing;
   } catch (error) {
     console.error('Error retrieving directory listing:', error);
-    return []; // return an error directory ?
+    return [];
   }
 };

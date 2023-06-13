@@ -11,7 +11,7 @@ export class ApiService {
 
   }
   getDirectoryListings(path: string) {
-    return this.http.get<any[]>(`http://localhost:3000/api/data/current?path=${path}`);
+    return this.http.get<any[]>(`http://localhost:3000/api/data` + path);
   }
 }
 

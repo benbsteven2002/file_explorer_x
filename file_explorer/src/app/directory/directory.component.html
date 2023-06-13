@@ -1,6 +1,7 @@
-<h2>Directory Listings</h2>
-<button mat-raised-button (click)="goBack()">Back</button>
-<button mat-raised-button (click)="toggleSelection()">Select</button>
+<h2 style="text-align: center;">Directory Listings</h2>
+<div style="display: flex; justify-content: center;">
+  <button mat-raised-button (click)="goBack()">Back</button>
+</div>
 <ul>
   <span *ngFor="let item of directoryListings">
     <app-directory-item [item]="item"></app-directory-item>
