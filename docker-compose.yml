@@ -1,0 +1,19 @@
+services:
+  front-end:
+    image: benbsteven2002/file_explorer_x-front-end
+    ports:
+      - 80:80
+    # networks:
+    #   - container_network
+  back-end:
+    image: benbsteven2002/file_explorer_x-back-end
+    ports:
+      - 3000:3000
+    volumes:
+      - /:/host
+
+    # networks:
+    #   - container_network
+
+# networks:
+#   container_network

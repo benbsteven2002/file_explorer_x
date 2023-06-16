@@ -19,6 +19,7 @@ app.get('/api/data/*', (req, res) => {
     targetDirectory = path.join('/', directoryPath);
     console.log(targetDirectory);
   }
+  targetDirectory = '/host/host_mnt' + targetDirectory;
   const directoryListing = getDirectoryListing(targetDirectory);
   console.log(directoryListing);
   res.json(directoryListing);
