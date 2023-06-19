@@ -36,20 +36,20 @@ To run the File Explorer X application, follow the instructions below:
 
 2. Build the Docker Images
     
-    Navigate to the project root directory:
+    - Navigate to the project root directory:
     ```shell
     cd file_explorer_x
     ```
-    Build the Docker images using Docker Compose:
+    - Build the Docker images using Docker Compose:
     ```shell
     docker-compose up --build
     ```
     
-    This command will build and start the frontend and backend containers defined in the docker-compose.yml file.
+    - This command will build and start the frontend and backend containers defined in the docker-compose.yml file.
     
 3. Access the Application
 
-    Once the containers are up and running, you can access the File Explorer X client application in your browser at:
+    - Once the containers are up and running, you can access the File Explorer X client application in your browser at:
 
     ```shell
     http://localhost:3000
