@@ -10,18 +10,13 @@ app.get('/api/data/*', (req, res) => {
   const directoryPath = req.params[0];
   let targetDirectory;
   
-  console.log(req.params);
-  console.log(directoryPath);
-  
   if (directoryPath === 'root') {
     targetDirectory = '/';
   } else {
     targetDirectory = path.join('/', directoryPath);
-    console.log(targetDirectory);
   }
   targetDirectory = '/host/host_mnt' + targetDirectory;
   const directoryListing = getDirectoryListing(targetDirectory);
-  console.log(directoryListing);
   res.json(directoryListing);
 });
 
@@ -55,7 +50,11 @@ const getDirectoryListing = (directoryPath) => {
         itemInfo.type = item.isDirectory() ? 'directory' : path.extname(itemInfo.name);
         itemInfo.created = itemStats.birthtime.toISOString().slice(0, 10);
         itemInfo.permissions = convertPermissionCode(parseInt(itemStats.mode.toString(8).slice(-3), 8));
-
+        
+        itemInfo.path = itemInfo.path.substring(14);
+        
+        console.log(itemInfo.path);
+        
         directoryListing.push(itemInfo);
       } catch (error) {
         console.error(`Error retrieving item info for ${itemInfo.path}:`, error);

@@ -1,11 +1,12 @@
 services:
   front-end:
     image: benbsteven2002/file_explorer_x-front-end
-    ports:
     
   back-end:
     image: benbsteven2002/file_explorer_x-back-end
     ports:
       - 3000:3000
     volumes:
+      # Maps the host machine's root directory to the container's /host directory
       - /:/host
+ 

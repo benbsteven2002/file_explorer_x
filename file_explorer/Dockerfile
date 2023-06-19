@@ -1,18 +1,13 @@
-# Stage 1: Build the Angular project
 FROM node:latest as build
 
 WORKDIR /app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install project dependencies
 RUN npm install
 
-# Copy the Angular project files
 COPY . .
 
-# Build the Angular project
 RUN npm run build
 
 # Stage 2: Deploy the built project on Nginx
