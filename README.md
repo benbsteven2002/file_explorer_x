@@ -52,5 +52,5 @@ To run the File Explorer X application, follow the instructions below:
     - Once the containers are up and running, you can access the File Explorer X client application in your browser at:
 
     ```shell
-    http://localhost:3000
+    http://localhost:80
     ```
