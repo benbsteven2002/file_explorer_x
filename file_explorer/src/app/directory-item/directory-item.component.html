@@ -8,7 +8,7 @@
         <span>{{ item.path }}</span>
       </mat-panel-description>
       <img [src]="getIconPath(item.type)" class="img">
-      <button mat-icon-button color="primary" (click)="handleButtonPress(item.path, item.isDirectory)">
+      <button mat-icon-button color="primary" [style.visibility]="item.isDirectory ? 'visible' : 'hidden'" (click)="handleButtonPress(item.path, item.isDirectory)">
         <mat-icon>arrow_forward</mat-icon>
       </button>
     </mat-expansion-panel-header>

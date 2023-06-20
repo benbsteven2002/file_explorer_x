@@ -1,6 +1,8 @@
 services:
   front-end:
     image: benbsteven2002/file_explorer_x-front-end
+    ports:
+      - 80:80
     
   back-end:
     image: benbsteven2002/file_explorer_x-back-end

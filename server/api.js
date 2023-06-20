@@ -8,6 +8,8 @@ app.use(cors());
 
 app.get('/api/data/*', (req, res) => {
   const directoryPath = req.params[0];
+  const page = parseInt(req.query.page) || 1;
+
   let targetDirectory;
   
   if (directoryPath === 'root') {
@@ -15,8 +17,8 @@ app.get('/api/data/*', (req, res) => {
   } else {
     targetDirectory = path.join('/', directoryPath);
   }
-  targetDirectory = '/host/host_mnt' + targetDirectory;
-  const directoryListing = getDirectoryListing(targetDirectory);
+  // targetDirectory = '/host/host_mnt' + targetDirectory;
+  const directoryListing = getDirectoryListing(targetDirectory, page);
   res.json(directoryListing);
 });
 
@@ -26,13 +28,20 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-const getDirectoryListing = (directoryPath) => {
+const getDirectoryListing = (directoryPath, page, itemsPerPage = 50) => {
   try {
     const directoryContents = fs.readdirSync(directoryPath, { withFileTypes: true });
+    
+    if (page <= 1) {
+      page = 1;
+    }
+    
+    let start = (page - 1) * itemsPerPage;
+    let end = start + itemsPerPage;
 
     const directoryListing = [];
 
-    directoryContents.forEach((item) => {
+    directoryContents.slice(start, end).forEach((item) => {
       const itemInfo = {
         name: item.name,
         path: path.join(directoryPath, item.name),
@@ -50,11 +59,7 @@ const getDirectoryListing = (directoryPath) => {
         itemInfo.type = item.isDirectory() ? 'directory' : path.extname(itemInfo.name);
         itemInfo.created = itemStats.birthtime.toISOString().slice(0, 10);
         itemInfo.permissions = convertPermissionCode(parseInt(itemStats.mode.toString(8).slice(-3), 8));
-        
-        itemInfo.path = itemInfo.path.substring(14);
-        
-        console.log(itemInfo.path);
-        
+        // itemInfo.path = itemInfo.path.substring(14);
         directoryListing.push(itemInfo);
       } catch (error) {
         console.error(`Error retrieving item info for ${itemInfo.path}:`, error);
@@ -67,6 +72,7 @@ const getDirectoryListing = (directoryPath) => {
     return [];
   }
 };
+
 
 function convertPermissionCode(code) {
   const binary = code.toString(2).padStart(9, '0');

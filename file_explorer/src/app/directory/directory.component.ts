@@ -11,11 +11,12 @@ export class DirectoryComponent {
   constructor(private apiService: ApiService, private directoryService: DirectoryService) {}
 
   directoryListings: any[] = [];
+  currentPage = 1;
   path: string = "/root";
 
 
   fetchDirectoryListings(path: string) {
-    this.apiService.getDirectoryListings(path).subscribe(
+    this.apiService.getDirectoryListings(path, String(this.currentPage)).subscribe(
       listings => {
         this.directoryListings = listings;
       },
@@ -27,17 +28,19 @@ export class DirectoryComponent {
 
 
   ngOnInit() {
+    this.currentPage = 1;
     this.fetchDirectoryListings(this.path);
 
     this.directoryService.directorySelected.subscribe((selectedDirectory: string) => {
       console.log('Selected directory:', selectedDirectory);
+      this.currentPage = 1;
       this.fetchDirectoryListings(selectedDirectory);
       this.path = selectedDirectory;
     });
   }
 
   goBack(): void {
-
+    this.currentPage = 1;
     const direc = this.getParentDirectory(this.path)
     this.path = direc;
 
@@ -57,5 +60,19 @@ export class DirectoryComponent {
     return directory;
   }
 
+  nextPage() {
+    if (!(this.directoryListings.length === 0)) {
+      this.currentPage += 1;
+    }
+    this.fetchDirectoryListings(this.path);
+  }
+
+  prevPage() {
+    this.currentPage -= 1;
+    if (this.currentPage <= 1) {
+      this.currentPage = 1;
+    }
+    this.fetchDirectoryListings(this.path);
+  }
 
 }
