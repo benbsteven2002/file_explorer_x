@@ -17,7 +17,7 @@ app.get('/api/data/*', (req, res) => {
   } else {
     targetDirectory = path.join('/', directoryPath);
   }
-  // targetDirectory = '/host/host_mnt' + targetDirectory;
+  targetDirectory = '/host/host_mnt' + targetDirectory;
   const directoryListing = getDirectoryListing(targetDirectory, page);
   res.json(directoryListing);
 });
@@ -59,7 +59,7 @@ const getDirectoryListing = (directoryPath, page, itemsPerPage = 50) => {
         itemInfo.type = item.isDirectory() ? 'directory' : path.extname(itemInfo.name);
         itemInfo.created = itemStats.birthtime.toISOString().slice(0, 10);
         itemInfo.permissions = convertPermissionCode(parseInt(itemStats.mode.toString(8).slice(-3), 8));
-        // itemInfo.path = itemInfo.path.substring(14);
+        itemInfo.path = itemInfo.path.substring(14);
         directoryListing.push(itemInfo);
       } catch (error) {
         console.error(`Error retrieving item info for ${itemInfo.path}:`, error);
