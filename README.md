@@ -17,6 +17,7 @@ This project consists of a Node.js API and an Angular 13+ client that allows use
 - Angular 13+: Frontend development and client application.
 - Docker: Containerization of the application for easy deployment and system independence.
 - REST: Communication protocol used between the frontend and backend.
+- NGINX: Server for the Angular container.
 
 ## Getting Started
 
