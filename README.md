@@ -10,6 +10,7 @@ This project consists of a Node.js API and an Angular 13+ client that allows use
 - Supports large directory sizes.
 - Differentiates between directories and files in the results.
 - Allows users to select a directory and update the results with the newly selected directory path.
+- Simple pagination on directories with more than 50 files.
 
 ## Technologies Used
 
