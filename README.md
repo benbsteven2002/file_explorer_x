@@ -1,5 +1,5 @@
 # File Explorer X
-Containerised Node.js API + Angular 13+ client for file system exploration, listing, details, and management.
+Containerised Node.js API + Angular 13 client for file system exploration, listing, details, and management.
 
 This project consists of a Node.js API and an Angular 13+ client that allows users to obtain the directory listing of a given directory path on the local filesystem of the host machine. The API provides file information such as filename, full path, file size, extension/file type, created date, and file permissions/attributes. The client application can call the API and display the results in a responsive and visually appealing manner.
 
